@@ -1,0 +1,2 @@
+class SqlInterpreterError(Exception):
+    pass
