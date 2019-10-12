@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from sql_interpreter.enums import *
+from sql_interpreter.enums import SelectType, Binary, Unary, ValueType, Order
 from sql_interpreter.context import Context
 from sql_interpreter.tables.select_table import SelectTable
 from sql_interpreter.tables.join_table import JoinTable
@@ -170,10 +170,9 @@ class ValueNode(Node):
             return str(self.value)
         if self.type == ValueType.STRING:
             return "'" + self.value + "'"
-        else:
-            if self.prefix:
-                return self.prefix + '.' + self.value
-            return self.value
+        if self.prefix:
+            return self.prefix + '.' + self.value
+        return self.value
 
     def interpret(self, context):
         if self.prefix:
@@ -210,26 +209,29 @@ class BinaryNode(Node):
     def get_value(self, row, table: JoinTable):
         arg1 = self.arg1.get_value(row, table)
         arg2 = self.arg2.get_value(row, table)
+
+        value = None
         if not arg1 or not arg2:
-            return None
+            pass
         if self.op == Binary.ADD:
-            return arg1 + arg2
-        elif self.op == Binary.SUB:
-            return arg1 - arg2
-        elif self.op == Binary.MUL:
-            return arg1 * arg2
-        elif self.op == Binary.DIV:
-            return arg1 / arg2
-        elif self.op == Binary.CON:
-            return str(arg1) + str(arg2)
-        elif self.op == Binary.OR:
-            return arg1 or arg2
-        elif self.op == Binary.AND:
-            return arg1 and arg2
-        elif self.op == Binary.LIKE:
+            value = arg1 + arg2
+        if self.op == Binary.SUB:
+            value = arg1 - arg2
+        if self.op == Binary.MUL:
+            value = arg1 * arg2
+        if self.op == Binary.DIV:
+            value = arg1 / arg2
+        if self.op == Binary.CON:
+            value = str(arg1) + str(arg2)
+        if self.op == Binary.OR:
+            value = arg1 or arg2
+        if self.op == Binary.AND:
+            value = arg1 and arg2
+        if self.op == Binary.LIKE:
             raise NotImplementedError
-        elif self.op == Binary.IN:
+        if self.op == Binary.IN:
             raise NotImplementedError
+        return value
 
 
 class UnaryNode(Node):

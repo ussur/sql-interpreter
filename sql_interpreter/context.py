@@ -41,7 +41,7 @@ class Context:
             if table:
                 return table
         raise SqlInterpreterError(
-                'Unable to resolve table id: "{}"'.format(table_id))
+            'Unable to resolve table id: "{}"'.format(table_id))
 
     def get_table_name(self, alias: str):
         return self._tables[alias].name

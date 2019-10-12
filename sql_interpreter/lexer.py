@@ -1,43 +1,43 @@
-import ply.lex as lex
 import re
+import ply.lex as lex
 
 
 reserved = {
-   'all': 'ALL',
-   'and': 'AND',
-   'any': 'ANY',
-   'as': 'AS',
-   'asc': 'ASC',
-   'between': 'BETWEEN',
-   'by': 'BY',
-   'cross': 'CROSS',
-   'desc': 'DESC',
-   'distinct': 'DISTINCT',
-   'escape': 'ESCAPE',
-   'exists': 'EXISTS',
-   'from': 'FROM',
-   'full': 'FULL',
-   'group': 'GROUP',
-   'having': 'HAVING',
-   'in': 'IN',
-   'inner': 'INNER',
-   'intersect': 'INTERSECT',
-   'is': 'IS',
-   'join': 'JOIN',
-   'left': 'LEFT',
-   'like': 'LIKE',
-   'minus': 'MINUS',
-   'natural': 'NATURAL',
-   'not': 'NOT',
-   'null': 'NULL',
-   'on': 'ON',
-   'or': 'OR',
-   'order': 'ORDER',
-   'outer': 'OUTER',
-   'right': 'RIGHT',
-   'select': 'SELECT',
-   'union': 'UNION',
-   'where': 'WHERE',
+    'all': 'ALL',
+    'and': 'AND',
+    'any': 'ANY',
+    'as': 'AS',
+    'asc': 'ASC',
+    'between': 'BETWEEN',
+    'by': 'BY',
+    'cross': 'CROSS',
+    'desc': 'DESC',
+    'distinct': 'DISTINCT',
+    'escape': 'ESCAPE',
+    'exists': 'EXISTS',
+    'from': 'FROM',
+    'full': 'FULL',
+    'group': 'GROUP',
+    'having': 'HAVING',
+    'in': 'IN',
+    'inner': 'INNER',
+    'intersect': 'INTERSECT',
+    'is': 'IS',
+    'join': 'JOIN',
+    'left': 'LEFT',
+    'like': 'LIKE',
+    'minus': 'MINUS',
+    'natural': 'NATURAL',
+    'not': 'NOT',
+    'null': 'NULL',
+    'on': 'ON',
+    'or': 'OR',
+    'order': 'ORDER',
+    'outer': 'OUTER',
+    'right': 'RIGHT',
+    'select': 'SELECT',
+    'union': 'UNION',
+    'where': 'WHERE',
 }
 
 tokens = list(reserved.values()) + [
@@ -46,7 +46,7 @@ tokens = list(reserved.values()) + [
     'DOT', 'SQUOTE',
 
     # Value types
-     'FLOAT','INT', 'STR',
+    'FLOAT', 'INT', 'STR',
 
     # Operations
     'ADD', 'SUB', 'ASTERISK', 'SLASH', 'EQ', 'LESS',
@@ -75,7 +75,7 @@ def sql_lexer():
 
     def t_IDENTIFIER(t):
         r'[a-zA-Z_$]+[a-zA-Z\d_$]*'
-        t.type = reserved.get(t.value.lower().strip(),'IDENTIFIER')
+        t.type = reserved.get(t.value.lower().strip(), 'IDENTIFIER')
         return t
 
     def t_FLOAT(t):
@@ -106,8 +106,8 @@ def sql_lexer():
 
 
     states = (
-            ('string','exclusive'),
-        )
+        ('string', 'exclusive'),
+    )
 
     def t_ANY_SQUOTE(t):
         r"'"

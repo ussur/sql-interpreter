@@ -157,7 +157,7 @@ def sql_parser():
         '''table : LPAR select_statement RPAR IDENTIFIER
         '''
         p[0] = p[2]
-        p[0].alias=p[4]
+        p[0].alias = p[4]
 
     def p_order_by_clause_1(p):
         '''order_by_clause : empty
@@ -203,7 +203,8 @@ def sql_parser():
 
     def p_error(p):
         if p:
-            raise ParserError('Unexpected token: "{0}" at line: {1}, index: {2}'.format(p.value, p.lineno, p.lexpos))
+            raise ParserError('Unexpected token: "{0}" at line: {1}, index: {2}'
+                              .format(p.value, p.lineno, p.lexpos))
         raise ParserError('Unexpected end of string: are you missing a ";"?')
 
     precedence = (

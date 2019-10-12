@@ -22,12 +22,12 @@ class Cli:
     @staticmethod
     def print_table(table: Table):
         longest_cols = [
-                max(max([len('Null' if row[column] is None
-                             else str(row[column]))
-                         for row in table.rows]),
-                    len(column)) + 3
-                for column in table.columns
-            ]
+            max(max([len('Null' if row[column] is None
+                         else str(row[column]))
+                     for row in table.rows]),
+                len(column)) + 3
+            for column in table.columns
+        ]
         row_format = "".join(["{:>" + str(longest_col) + "}"
                               for longest_col
                               in longest_cols])
@@ -38,7 +38,7 @@ class Cli:
             print(row_format.format(*row_to_print))
 
     @staticmethod
-    def print_message(message: str):
+    def print_message(message):
         print(message)
 
     @staticmethod
